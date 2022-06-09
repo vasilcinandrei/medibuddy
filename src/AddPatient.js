@@ -1,17 +1,21 @@
 import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import useAuth from "./hooks/useAuth";
 import axios from './api/axios';
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 // const REGISTER_URL = 'signup/doctor';
-const REGISTER_URL = 'signup/doctor/ ';
+const REGISTER_URL = 'signup/patient/ ';
 
-const CreateAccMedic = () => {
+const AddPatient = () => {
+    const navigate = useNavigate();
     const userRef = useRef();
     const errRef = useRef();
+    const { auth } = useAuth();
+    const theToken = auth?.token;
 
     const [username, setUserName] = useState('');
     const [validName, setValidName] = useState(false);
@@ -21,8 +25,18 @@ const CreateAccMedic = () => {
     const [last_name, setlast_name] = useState('');
     const [email, setEmail] = useState('');
 
-    const [speciality, setSpeciality] = useState('');
-    const [is_doctor, setis_doctor] = useState(true);
+    const [cnp, setCNP] = useState('');
+    const [birthday, setBirthday] = useState('');
+    const [street, setStreet] = useState('');
+    const [city, setCity] = useState('');
+    const [state, setState] = useState('');
+    const [phone, setPhone] = useState('');
+    const [profession, setProfession] = useState('');
+    const [workplace, setWorkplace] = useState('');
+
+    const [alergies, setAlergies] = useState('');
+
+    const [is_doctor, setis_doctor] = useState(false);
 
     const [password, setPassword] = useState('');
     const [validPassword, setValidPassword] = useState(false);
@@ -34,6 +48,8 @@ const CreateAccMedic = () => {
 
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
+
+
 
     useEffect(() => {
         userRef.current.focus();
@@ -50,7 +66,7 @@ const CreateAccMedic = () => {
 
     useEffect(() => {
         setErrMsg('');
-    }, [username, first_name, last_name, speciality, password, matchPassword])
+    }, [username, first_name, last_name, password, matchPassword])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -72,14 +88,26 @@ const CreateAccMedic = () => {
                             "first_name": first_name,
                             "last_name": last_name
                         },
-                        "speciality": speciality
+                        "cnp": cnp,
+                        "birthday": birthday,
+                        "street": street,
+                        "city": city,
+                        "state": state,
+                        "phone": phone,
+                        "profession": profession,
+                        "workplace": workplace,
+                        "records": "",
+                        "alergies": alergies,
+                        "cardio_check": ""
                     }
 
                 ),
                 {
                     headers: {
                         'Content-Type': 'application/json',
-                        'Access-Control-Request-Private-Network': true
+                        'Access-Control-Request-Private-Network': true,
+                        'Authorization': `Token ${theToken}`
+
                     },
                     withCredentials: true
                 }
@@ -93,7 +121,6 @@ const CreateAccMedic = () => {
             setUserName('');
             setfirst_name('');
             setlast_name('');
-            setSpeciality('');
             setPassword('');
             setMatchPassword('');
         } catch (err) {
@@ -107,17 +134,10 @@ const CreateAccMedic = () => {
             errRef.current.focus();
         }
     }
-    console.log(">>>", username, password, first_name, last_name, speciality, email, is_doctor);
+    console.log(">>>", username, password, first_name, last_name, email, is_doctor);
     return (
         <>
-            {success ? (
-                <section className="registerSection">
-                    <h1>Success!</h1>
-                    <p>
-                        <a href="#">Sign In</a>
-                    </p>
-                </section>
-            ) : (
+            {success ? navigate('/medic-main-page') : (
                 <section className='medic-login-block'>
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
                     <h1>Register</h1>
@@ -203,22 +223,131 @@ const CreateAccMedic = () => {
                         // onBlur={() => setUserFocus(false)}
                         />
 
-                        <label htmlFor="speciality" className="registerLabel">
-                            Speciality:
+                        <label htmlFor="cnp" className="registerLabel">
+                            CNP:
                         </label>
                         <input
                             className="registerInput"
                             type="text"
-                            id="speciality"
+                            id="cnp"
                             ref={userRef}
                             autoComplete="off"
-                            onChange={(e) => setSpeciality(e.target.value)}
-                            value={speciality}
+                            onChange={(e) => setCNP(e.target.value)}
+                            value={cnp}
                             required
-                        // aria-invalid={validName ? "false" : "true"}
-                        // aria-describedby="uidnote"
-                        // onFocus={() => setUserFocus(true)}
-                        // onBlur={() => setUserFocus(false)}
+
+                        />
+                        <label htmlFor="Birthday" className="registerLabel">
+                            Birthday:
+                        </label>
+                        <input
+                            className="registerInput"
+                            type="date"
+                            id="birthday"
+                            ref={userRef}
+                            autoComplete="off"
+                            onChange={(e) => setBirthday(e.target.value)}
+                            value={birthday}
+                            required
+
+                        />
+                        <label htmlFor="Street" className="registerLabel">
+                            Street:
+                        </label>
+                        <input
+                            className="registerInput"
+                            type="text"
+                            id="street"
+                            ref={userRef}
+                            autoComplete="off"
+                            onChange={(e) => setStreet(e.target.value)}
+                            value={street}
+                            required
+
+                        />
+                        <label htmlFor="City" className="registerLabel">
+                            City:
+                        </label>
+                        <input
+                            className="registerInput"
+                            type="text"
+                            id="city"
+                            ref={userRef}
+                            autoComplete="off"
+                            onChange={(e) => setCity(e.target.value)}
+                            value={city}
+                            required
+
+                        />
+                        <label htmlFor="State" className="registerLabel">
+                            State:
+                        </label>
+                        <input
+                            className="registerInput"
+                            type="text"
+                            id="state"
+                            ref={userRef}
+                            autoComplete="off"
+                            onChange={(e) => setState(e.target.value)}
+                            value={state}
+                            required
+
+                        />
+                        <label htmlFor="phone" className="registerLabel">
+                            Phone:
+                        </label>
+                        <input
+                            className="registerInput"
+                            type="number"
+                            id="phone"
+                            ref={userRef}
+                            autoComplete="off"
+                            onChange={(e) => setPhone(e.target.value)}
+                            value={phone}
+                            required
+
+                        />
+                        <label htmlFor="Profession" className="registerLabel">
+                            Profession:
+                        </label>
+                        <input
+                            className="registerInput"
+                            type="text"
+                            id="profession"
+                            ref={userRef}
+                            autoComplete="off"
+                            onChange={(e) => setProfession(e.target.value)}
+                            value={profession}
+                            required
+
+                        />
+                        <label htmlFor="Workplace" className="registerLabel">
+                            Workplace:
+                        </label>
+                        <input
+                            className="registerInput"
+                            type="text"
+                            id="workplace"
+                            ref={userRef}
+                            autoComplete="off"
+                            onChange={(e) => setWorkplace(e.target.value)}
+                            value={workplace}
+                            required
+
+                        />
+                        <label htmlFor="Alergies" className="registerLabel">
+                            Alergies:
+                        </label>
+                        <input
+                            className="registerInput"
+                            type="text"
+                            id="alergies"
+                            ref={userRef}
+                            autoComplete="off"
+                            onChange={(e) => setAlergies(e.target.value)}
+                            value={alergies}
+                            required
+
                         />
 
                         <label htmlFor="password" className="registerLabel">
@@ -270,17 +399,11 @@ const CreateAccMedic = () => {
 
                         <button className="registerButton" disabled={!validName || !validPassword || !validMatch ? true : false}>Sign Up</button>
                     </form>
-                    <p>
-                        Already registered?<br />
-                        <span className="line">
-                            {/*put router link here*/}
-                            <Link to={'/login-medic'}>Log In</Link>
-                        </span>
-                    </p>
+
                 </section>
             )}
         </>
     )
 }
 
-export default CreateAccMedic
+export default AddPatient
