@@ -140,7 +140,7 @@ const AddPatient = () => {
             {success ? navigate('/medic-main-page') : (
                 <section className='medic-login-block'>
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-                    <h1>Register</h1>
+                    <h1>Add new patient</h1>
                     <form onSubmit={handleSubmit} className="registerForm">
                         <label htmlFor="username" className="registerLabel">
                             Username:
@@ -397,7 +397,7 @@ const AddPatient = () => {
                             Must match the first password input field.
                         </p>
 
-                        <button className="registerButton" disabled={!validName || !validPassword || !validMatch ? true : false}>Sign Up</button>
+                        <button className="registerButton" disabled={!validName || !validPassword || !validMatch ? true : false}>Add Patient</button>
                     </form>
 
                 </section>

@@ -14,50 +14,23 @@ import Layout from './Layout';
 import AddPatient from './AddPatient';
 import PacientPage from './PacientPage';
 import EditPatients from './EditPatients';
-
+import PacientMainPage from './PacientMainPage';
+import PatientMeasurements from './PatientMeasurements';
+import MockDataMeasurements from './MockDataMeasurements';
+import CreateNotification from './CreateNofitication';
+import NotificationsDoctorPage from './NotificationsDoctorPage';
+import NotificationsPacientPage from './NotificationsPacientPage';
 
 function App() {
   return (
-    // <Router>
-    //   <div className="App">
-    //     <Navbar />
-    //     <div className="content">
-    //       <Routes>
-    //         <Route exact path="/">
-    //           <About />
-    //         </Route>
-    //         <Route path="/contact">
-    //           <Contact />
-    //         </Route>
-    //         {/* <Route path="/login">
-    //           <Login />
-    //         </Route> */}
-    //         <Route path="/login-medic">
-    //           <MedicLogIn />
-    //         </Route>
-    //         {/* <Route path="/login-pacient">
-    //           <PacientLogIn />
-    //         </Route> */}
-    //         <Route path="/register">
-    //           <CreateAccMedic />
-    //         </Route>
-    //         <Route path="/medic-main">
-    //           <MedicMainPage />
-    //         </Route>
-    //         <Route path="*">
-    //           <NotFound />
-    //         </Route>
-    //       </Routes>
-    //     </div>
-    //   </div>
-    // </Router>
+
     <div className='App'>
       <div className='content'>
         <Routes>
           <Route path="/" element={<Layout />} >
 
             {/* public routes */}
-            <Route path="about" element={<About />} />
+            <Route path="/" element={<About />} />
 
             <Route path="contact" element={<Contact />} />
 
@@ -70,6 +43,9 @@ function App() {
               <Route path="medic-main-page" element={<MedicMainPage />} />
             </Route>
             <Route element={<RequireAuth />}>
+              <Route path="pacient-main-page" element={<PacientMainPage />} />
+            </Route>
+            <Route element={<RequireAuth />}>
               <Route path="add-patient" element={<AddPatient />} />
             </Route>
             <Route element={<RequireAuth />}>
@@ -77,6 +53,21 @@ function App() {
             </Route>
             <Route element={<RequireAuth />}>
               <Route path="edit-patient/:id" element={<EditPatients />} />
+            </Route>
+            <Route element={<RequireAuth />}>
+              <Route path="patient-measurements" element={<PatientMeasurements />} />
+            </Route>
+            <Route element={<RequireAuth />}>
+              <Route path="mock-data" element={<MockDataMeasurements />} />
+            </Route>
+            <Route element={<RequireAuth />}>
+              <Route exact path="add-notification-page" element={<CreateNotification />} />
+            </Route>
+            <Route element={<RequireAuth />}>
+              <Route exact path="medic-notification-page" element={<NotificationsDoctorPage />} />
+            </Route>
+            <Route element={<RequireAuth />}>
+              <Route exact path="patient-notification-page" element={<NotificationsPacientPage />} />
             </Route>
 
 

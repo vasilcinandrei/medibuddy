@@ -7,7 +7,7 @@ import React from "react";
 import { useIsMounted } from "./hooks/useIsMounted";
 
 
-const MedicMainPage = () => {
+const PacientMainPage = () => {
     const { auth } = useAuth();
     const { id } = useParams();
     const [users, setUsers] = useState();
@@ -20,7 +20,6 @@ const MedicMainPage = () => {
     const [isPending, setisPending] = useState(true);
     const isMounted = useIsMounted();
     const [event, setEvent] = useState();
-
     const apiURL = 'http://ec2-34-234-75-154.compute-1.amazonaws.com/api/';
 
 
@@ -36,7 +35,7 @@ const MedicMainPage = () => {
         let mounted = true;
 
         async function fetchData() {
-            const result = await authAxios.get('doctor/profile');
+            const result = await authAxios.get('patient/profile/');
             if (mounted) {
                 setData(result.data);
                 setDataHelper(result.data.patients);
@@ -48,8 +47,8 @@ const MedicMainPage = () => {
 
 
         fetchData();
-        console.log(result);
-        console.log(dataHelper);
+
+        // console.log(dataHelper);
 
 
         return () => { mounted = false }
@@ -59,7 +58,7 @@ const MedicMainPage = () => {
         (async () => {
             try {
                 // fetching all patirnts
-                let res = await await authAxios.get('doctor/patients/');
+                let res = await await authAxios.get('patient/profile/');
                 setPatient(res.data);
                 // console.log(patients);
                 setisPending(false);
@@ -68,6 +67,18 @@ const MedicMainPage = () => {
             }
         })();
     }, []);
+    console.log("Pacient >>", result);
+    function getAge(dateString) {
+        var today = new Date();
+        var birthDate = new Date(dateString);
+        var age = today.getFullYear() - birthDate.getFullYear();
+        var m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        return age;
+    }
+
 
     return (
 
@@ -76,38 +87,37 @@ const MedicMainPage = () => {
             {result && (
                 <article>
                     <div className="flex-container pacient-info">
+
                         <div className="flex-child">
                             <h2>Welcome, {result.user.first_name} {result.user.last_name} </h2>
                             <br></br>
+
                             <h4><b>Email:</b> {result.user.email}</h4>
+                            <h4><b>Address:</b> {result.street}, {result.city}, {result.state}</h4>
+
+                            <h4><b>Age:</b> {getAge(result.birthday)}</h4>
+
+
+                            <h4><b>Phone:</b> {result.phone} </h4>
+                            <h4><b>Profession:</b> {result.profession} </h4>
+                            <h4><b>Workplace:</b> {result.workplace} </h4>
+                            <h4><b>Alergies:</b> {result.alergies} </h4>
+                        </div>
+
+                        <div className="flex-child text-right">
+                            <h2>Device Data</h2>
                             <br />
-                            <h4><b>Speciality:</b> {result.speciality}</h4>
-                            <h4><b>Number of patients:</b> {result.patients.length}</h4>
-                            <br />
-                            <Link to={'/add-patient'}>Add a new patient</Link>
+
+                            <Link to="/patient-measurements">Check My Measurements</Link>
+                            {/* <Link to="/mock-data">add data</Link> */}
+
+
+
+
+
                         </div>
 
 
-
-                        {patients && (
-                            <div className="flex-child text-right">
-                                <h1>Patients list</h1>
-                                {patients?.map(patient => (
-                                    <div className="blog-preview" key={patient.user.id} >
-
-                                        <Link to={`/patient-details/${patient.user.id}`}>
-                                            {patient.user.first_name} {patient.user.last_name}
-                                        </Link>
-
-                                    </div>
-                                ))}
-
-
-
-
-
-                            </div>
-                        )}
                     </div>
 
 
@@ -124,5 +134,5 @@ const MedicMainPage = () => {
     );
 }
 
-export default MedicMainPage;
+export default PacientMainPage;
 

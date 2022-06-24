@@ -43,12 +43,17 @@ const MedicLogIn = () => {
             console.log(JSON.stringify(response?.data));
             // console.log(JSON.stringify(response));
             const token = response?.data?.token;
-            const is_doctor = response?.is_doctor;
-            const user_id = response?.user_id;
+            const is_doctor = response?.data?.is_doctor;
+            const user_id = response?.data?.user_id;
             setAuth({ username, password, is_doctor, token, user_id });
             setUser('');
             setPwd('');
-            navigate("/medic-main-page", { replace: true });
+            if (response.data.is_doctor == true) {
+                navigate("/medic-main-page", { replace: true });
+            } else {
+                navigate("/pacient-main-page", { replace: true });
+            }
+
 
         } catch (err) {
             if (!err?.response) {

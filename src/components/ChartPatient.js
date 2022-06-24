@@ -8,11 +8,11 @@ defaults.global.legend.position = 'bottom'
 
 const LineChart = () => {
     const { auth } = useAuth();
-    // const theToken = auth?.token;
+    const theToken = auth?.token;
     const { id } = useParams();
 
-    const { data: user, error, isPending } = useFetch('http://ec2-34-234-75-154.compute-1.amazonaws.com/api/doctor/patients/' + id)
-    // console.log("limits:", user.limits.ecg_low)
+    const { data: user, error, isPending } = useFetch('http://ec2-34-234-75-154.compute-1.amazonaws.com/api/patient/measurements/?date=2022-06-22')
+    // console.log("data:", user[0].ecg)
 
 
     return (
@@ -134,7 +134,7 @@ const LineChart = () => {
                                 yAxes: [
                                     {
                                         ticks: {
-                                            beginAtZero: true,
+                                            beginAtZero: false,
                                         },
                                     },
                                 ],
@@ -264,7 +264,7 @@ const LineChart = () => {
                                 yAxes: [
                                     {
                                         ticks: {
-                                            beginAtZero: true,
+                                            beginAtZero: false,
                                         },
                                     },
                                 ],
@@ -394,7 +394,7 @@ const LineChart = () => {
                                 yAxes: [
                                     {
                                         ticks: {
-                                            beginAtZero: true,
+                                            beginAtZero: false,
                                         },
                                     },
                                 ],
@@ -524,7 +524,7 @@ const LineChart = () => {
                                 yAxes: [
                                     {
                                         ticks: {
-                                            beginAtZero: true,
+                                            beginAtZero: false,
                                         },
                                     },
                                 ],

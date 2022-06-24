@@ -177,7 +177,7 @@ const EditPatients = () => {
             {success ? navigate('/medic-main-page') : (
                 <section className='medic-login-block'>
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-                    <h1>Register</h1>
+                    <h1>Edit Patient</h1>
                     <form onSubmit={handleSubmit} className="registerForm">
 
                         <label htmlFor="first_name" className="registerLabel">

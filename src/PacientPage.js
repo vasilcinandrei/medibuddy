@@ -24,6 +24,11 @@ const PacientPage = () => {
             navigate('/medic-main-page');
         })
     }
+    const handleClick2 = () => {
+
+        navigate('/add-notification-page/');
+
+    }
 
 
 
@@ -52,6 +57,11 @@ const PacientPage = () => {
                             <br />
                             <br />
                             <button onClick={handleClick}>Delete</button>
+                            <br />
+                            <br />
+                            <Link to='/add-notification-page/' state={{ id }}>
+                                Add Notification
+                            </Link>
                         </div>
                         <div className="pacient-info">
                             <br /><br />

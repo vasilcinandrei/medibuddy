@@ -202,6 +202,27 @@ body {
 }
 
 /* blog previews / list */
+.about-block1 {
+  padding: 10px 16px;
+  margin: 20px 0;
+  border-bottom: 1px solid #fafafa;
+}
+
+.about-block1 {
+  box-shadow: 4px 8px 10px rgba(0, 0, 0, 0.1);
+}
+
+.about-block1 h2 {
+  font-size: 20px;
+  color: #3BC4A6;
+  margin-bottom: 8px;
+}
+
+.about-block1 a {
+  text-decoration: none;
+}
+
+/* blog previews / list */
 .about-block {
   padding: 10px 16px;
   margin: 20px 0;
@@ -220,6 +241,16 @@ body {
 
 .about-block a {
   text-decoration: none;
+}
+
+.about-block button {
+  float: right;
+  background: #3BC4A6;
+  color: #fff;
+  border: 0;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
 /* blog details page */
